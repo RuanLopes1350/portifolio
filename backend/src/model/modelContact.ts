@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
-import { typeContact } from '../types/typeContact.js';
 
 class ModelContact {
-    schema: mongoose.Schema<typeContact>;
+    model: mongoose.Model<any>;
 
     constructor() {
-        this.schema = new mongoose.Schema(
+        const schema = new mongoose.Schema(
             {
                 name: { type: String, required: true },
                 link: { type: String, required: true }
@@ -17,8 +16,8 @@ class ModelContact {
             }
         );
 
-        this.schema.plugin(mongoosePaginate);
-        this.model = mongoose.model('contact', this.schema);
+        schema.plugin(mongoosePaginate);
+        this.model = mongoose.model("contact", schema)
     }
 }
 

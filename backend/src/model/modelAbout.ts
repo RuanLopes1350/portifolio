@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2';
-import { typeAbout } from '../types/typeAbout.js';
 
 class About {
     model: mongoose.Model<any>;
