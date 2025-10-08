@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import DbConnect from './config/DbConnect.js';
 import routerAbout from './routes/routeAbout.js';
+import routerSkills from './routes/routeSkills.js';
+import routerContact from './routes/routeContact.js';
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.get('/api', (req, res) => {
 })
 
 app.use('/api', routerAbout);
+app.use('/api', routerSkills);
+app.use('/api', routerContact);
 
 async function startServer() {
   try {
