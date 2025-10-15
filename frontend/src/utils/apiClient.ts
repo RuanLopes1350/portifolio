@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { About, Contact, Skill, Project, UserInfo } from '@/types/api';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:1350/api',
+    baseURL: 'https://portifolio-lilac-one-71.vercel.app/api',
     headers: {
         'Content-Type': 'application/json',
     },
