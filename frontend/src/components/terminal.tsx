@@ -67,35 +67,60 @@ export default function TerminalComponent() {
             ).join('\n\n');
     };
 
-    // Função para transformar URLs em links clicáveis
+    // Função para transformar URLs em links clicáveis e estilizar nomes de projetos
     const renderTextWithLinks = (text: string) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const parts = text.split(urlRegex);
-
-        return parts.map((part, index) => {
-            if (part.match(urlRegex)) {
+        const projectNameRegex = /^(\d+\.\s+)(.+)$/gm; // Detecta linhas que começam com número (projetos)
+        
+        // Primeiro, processa nomes de projetos
+        const lines = text.split('\n');
+        
+        return lines.map((line, lineIndex) => {
+            const projectMatch = line.match(/^(\d+\.\s+)(.+)$/);
+            
+            // Se for uma linha de nome de projeto (ex: "1. NOME DO PROJETO")
+            if (projectMatch) {
+                const [, number, projectName] = projectMatch;
                 return (
-                    <a
-                        key={index}
-                        href={part}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#60A5FA] underline hover:text-[#93C5FD] transition-colors"
-                    >
-                        {part}
-                    </a>
+                    <span key={lineIndex}>
+                        {number}
+                        {projectName.split(' ').map((word, wordIdx) => (
+                            <span key={`${lineIndex}-${wordIdx}`} className="text-[#FBBF24] font-semibold">
+                                {word}{wordIdx < projectName.split(' ').length - 1 ? ' ' : ''}
+                            </span>
+                        ))}
+                        {lineIndex < lines.length - 1 && '\n'}
+                    </span>
                 );
             }
-            return part;
+            
+            // Para outras linhas, processa URLs normalmente
+            const urlParts = line.split(urlRegex);
+            const processedLine = urlParts.map((part, partIndex) => {
+                if (part.match(urlRegex)) {
+                    return (
+                        <a
+                            key={`${lineIndex}-${partIndex}`}
+                            href={part}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#60A5FA] underline hover:text-[#93C5FD] transition-colors"
+                        >
+                            {part}
+                        </a>
+                    );
+                }
+                return part;
+            });
+            
+            return (
+                <span key={lineIndex}>
+                    {processedLine}
+                    {lineIndex < lines.length - 1 && '\n'}
+                </span>
+            );
         });
     };
-
-    // Função para estilizar o nome dos Projetos 
-    const stylizeProjectName = (name: string) => {
-        return name.split(' ').map((word, idx) => (
-            <span key={idx} className="text-[#FBBF24] font-semibold">{word}</span>
-        ));
-    }
 
     const handleKeyDown = async (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && !isLoading) {
