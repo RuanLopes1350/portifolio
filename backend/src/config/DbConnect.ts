@@ -6,13 +6,14 @@ dotenv.config();
 class DbConnect {
     static async conectar() {
         try {
-            let mongoUri = process.env.MONGO_URI;
-            console.log('Conectando ao MongoDB...');
+            let environment = process.env.NODE_ENV
+            console.log(`Rodando em ambiente: ${environment}`)
+            let mongoUri
+            mongoUri = process.env.MONGO_URI;
+            console.log(mongoUri)
             if (!mongoUri) {
-                throw new Error('MONGO_URI não está definido nas variáveis de ambiente.');
+                throw new Error("A variável de ambiente DB_URL não está definida.")
             }
-            await mongoose.connect(mongoUri);
-            console.log('Conexão com o MongoDB estabelecida com sucesso.');
 
             mongoose.connection.on('connected', () => {
             });
@@ -23,12 +24,13 @@ class DbConnect {
             mongoose.connection.on('disconnected', () => {
             });
 
-            await mongoose.connect(mongoUri).then(() =>
+            await mongoose.connect(mongoUri).then( () =>
                 console.log('Conexão com o banco de dados bem sucedida!')
             )
-        } catch (error) {
-            console.error('Erro ao conectar ao MongoDB:', error);
-            throw error;
+
+        } catch (erro) {
+            console.error('Erro ao conectar ao banco!')
+            throw erro;
         }
     }
 

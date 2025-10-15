@@ -32,6 +32,16 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(async (req, res, next) => {
+  try {
+    await DbConnect.conectar();
+    next();
+  } catch (error) {
+    console.error('Falha na conexão com o banco:', error);
+    res.status(500).json({ error: 'Não foi possível conectar ao banco de dados.' });
+  }
+});
+
 app.get('/api', (req, res) => {
     res.json({ message: 'Tamo ai!' });
 })
