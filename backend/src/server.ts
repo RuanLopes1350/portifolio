@@ -20,8 +20,9 @@ app.use((req, res, next) => {
   console.log(`- Origem: ${req.ip} \n- User-Agent: ${req.headers['user-agent']} \n${req.hostname ? `- Hostname: ${req.hostname}` : ''}`);
   console.log(`Requisição para: ${req.method} ${req.path}`);
   console.log('Horário:', new Date().toLocaleString('pt-BR', { timeZone: 'America/Manaus' }));
+  console.log(`IP do usuário: ${req.ip}`);
   console.log('-----------------------');
-  console.log(`Body:\n ${JSON.stringify(req.body, null, 2)}`);
+  req.method !== 'GET' && console.log(`Body:\n ${JSON.stringify(req.body, null, 2)}`);
 
   next();
 });
@@ -29,6 +30,15 @@ app.use((req, res, next) => {
 app.get('/api', (req, res) => {
     res.json({ message: 'Tamo ai!' });
 })
+
+app.get('/api/user-info', (req, res) => {
+    const userIP = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Desconhecido';
+    res.json({ 
+        ip: userIP,
+        userAgent: req.headers['user-agent'],
+        timestamp: new Date().toISOString()
+    });
+});
 
 app.use('/api', routerAbout);
 app.use('/api', routerSkills);
