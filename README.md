@@ -13,5 +13,3 @@ Aplicação web moderna e full-stack desenvolvida para apresentar meus projetos 
 - **Banco de Dados**: MongoDB / Mongoose
 
 ---
-
-Acessivel em [ruanlopes.is-a.dev/](ruanlopes.is-a.dev/)
