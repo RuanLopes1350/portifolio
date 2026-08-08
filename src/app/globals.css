@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@layer base {
+  :root,
+  html[data-theme="dark"] {
+    --bg-page: #131417; /* Rich charcoal dark gray, not pure black */
+    --bg-card: #1a1b20;
+    --bg-card-hover: #22232a;
+    --border-color: #2d2e37;
+    --text-main: #f4f4f6;
+    --text-muted: #9e9ea7;
+    --code-bg: #0d0e11;
+  }
+
+  html[data-theme="light"] {
+    --bg-page: #f4f4f6; /* Warm off-white/zinc, not pure white */
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8f8fa;
+    --border-color: #e2e2e8;
+    --text-main: #18181b;
+    --text-muted: #64646e;
+    --code-bg: #eaebf0;
+  }
+
+  html,
+  body {
+    background-color: var(--bg-page) !important;
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+}
+
+@layer utilities {
+  .bg-theme-page {
+    background-color: var(--bg-page);
+  }
+  .bg-theme-card {
+    background-color: var(--bg-card);
+  }
+  .bg-theme-card-hover:hover {
+    background-color: var(--bg-card-hover);
+  }
+  .border-theme-border {
+    border-color: var(--border-color);
+  }
+  .text-theme-main {
+    color: var(--text-main);
+  }
+  .text-theme-muted {
+    color: var(--text-muted);
+  }
+  .bg-code {
+    background-color: var(--code-bg);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
