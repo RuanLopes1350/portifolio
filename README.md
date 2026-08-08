@@ -14,4 +14,4 @@ Aplicação web moderna e full-stack desenvolvida para apresentar meus projetos 
 
 ---
 
-Acessivel em [ruanlopes.is-a.dev/]()
+Acessivel em [ruanlopes.is-a.dev/](ruanlopes.is-a.dev/)
