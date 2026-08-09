@@ -30,4 +30,11 @@ export const auth = betterAuth({
   },
   secret: process.env.BETTER_AUTH_SECRET || 'fallback-secret-for-dev-only-min-32-chars!!',
   baseURL: getBaseURL(),
+  trustedOrigins: [
+    'https://ruanlopes.is-a.dev',
+    'http://localhost:3000',
+    ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : []),
+  ].filter(Boolean),
 });
